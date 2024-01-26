@@ -1,9 +1,13 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { Button } from '../ui/button'
-import { LogOut } from 'lucide-react'
 
-export const Navbar = () => {
+import { Button } from '../ui/button'
+import { LogoutButton } from './logout-button'
+import { auth } from '@/auth'
+
+export const Navbar = async () => {
+  const session = await auth()
+
   return (
     <header className="flex w-full items-center justify-between px-8 py-4">
       <Link href={'/'}>
@@ -23,11 +27,7 @@ export const Navbar = () => {
           Watch tutorial
         </Button>
 
-        <form action="">
-          <Button className="rounded-full bg-black p-3 text-xs text-white md:text-sm">
-            <LogOut className="cursor-pointer" />
-          </Button>
-        </form>
+        {session && <LogoutButton />}
       </div>
     </header>
   )

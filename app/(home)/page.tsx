@@ -3,9 +3,10 @@ import Link from 'next/link'
 
 import { Navbar } from '@/components/shared/navbar'
 import { Button } from '@/components/ui/button'
+import { auth } from '@/auth'
 
-const HomePage = () => {
-  const auth = true
+const HomePage = async () => {
+  const session = await auth()
 
   return (
     <div className="bg-[#fffc00]">
@@ -24,7 +25,7 @@ const HomePage = () => {
               <p className="mt-2 text-lg font-semibold">What are you waiting for?</p>
             </div>
 
-            {!auth ? (
+            {!session ? (
               <Button
                 asChild
                 className="mx-auto mt-4 flex items-center gap-2 rounded-lg bg-black text-white md:mx-0"
