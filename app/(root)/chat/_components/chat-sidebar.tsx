@@ -1,12 +1,13 @@
 import Image from 'next/image'
 import { Search } from 'lucide-react'
+import { Suspense } from 'react'
 
 import { auth } from '@/auth'
 
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { LogoutButton } from '@/components/shared/logout-button'
-import { ChatList } from './chat-list'
+import { ChatList, ChatListSkeleton } from './chat-list'
 
 export const ChatSidebar = async () => {
   const session = await auth()
@@ -41,7 +42,9 @@ export const ChatSidebar = async () => {
         </div>
       </div>
 
-      <ChatList />
+      <Suspense fallback={<ChatListSkeleton />}>
+        <ChatList />
+      </Suspense>
     </aside>
   )
 }
