@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+  images: {
+    remotePatterns: [{ hostname: 'questhowth.ie', protocol: 'https' }],
+  },
+}
 
 export default nextConfig
