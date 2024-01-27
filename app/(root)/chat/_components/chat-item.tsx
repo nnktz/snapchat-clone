@@ -57,7 +57,7 @@ export const ChatItem = ({ chat }: { chat: any }) => {
 
   return (
     <Link href={`/chat/${userToChat?._id}`}>
-      <li className="flex cursor-pointer items-center border-b border-b-sigColorBgBorder bg-sigSurface p-2 hover:bg-sigColorBgBorder">
+      <li className="flex cursor-pointer items-center border-b  border-b-sigColorBgBorder bg-sigSurface p-2 hover:bg-sigColorBgBorder">
         <Avatar className="h-14 w-14 bg-black">
           <AvatarImage src={userToChat?.avatar || imgUrl} />
         </Avatar>

@@ -1,6 +1,7 @@
 'use server'
 
 import { v2 as cloudinary } from 'cloudinary'
+import { revalidatePath } from 'next/cache'
 
 import { auth } from '@/auth'
 import { connectToDB } from '@/lib/db'
@@ -57,6 +58,8 @@ export const sendMessageAction = async (
       chat.messages.push(newMessage._id)
       await chat.save()
     }
+
+    revalidatePath(`/chat/${receiverId}`)
 
     return newMessage
   } catch (error: any) {

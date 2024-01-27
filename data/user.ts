@@ -2,6 +2,7 @@ import { unstable_noStore as noStore } from 'next/cache'
 
 import Message, { IMessageDocument } from '@/models/message.model'
 import User, { IUserDocument } from '@/models/user.model'
+import { connectToDB } from '@/lib/db'
 
 export const getUsers = async (authUserId: string) => {
   noStore()
@@ -51,6 +52,23 @@ export const getUsers = async (authUserId: string) => {
     return usersInfo
   } catch (error) {
     console.error('Error get users: ', error)
+    throw error
+  }
+}
+
+export const getUserProfileById = async (userId: string) => {
+  try {
+    await connectToDB()
+
+    const user: IUserDocument | null = await User.findById(userId)
+
+    if (!user) {
+      throw new Error('User not found')
+    }
+
+    return user
+  } catch (error) {
+    console.error('Error get user profile: ', error)
     throw error
   }
 }

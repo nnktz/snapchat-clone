@@ -10,7 +10,7 @@ export const ChatList = async () => {
   const chats = session?.user ? await getUsers(session.user._id) : []
 
   return (
-    <nav className="flex-1 overflow-y-auto">
+    <nav className="flex-1 overflow-y-auto px-4">
       <ul>
         {chats.map((chat) => (
           <ChatItem key={chat._id} chat={chat} />

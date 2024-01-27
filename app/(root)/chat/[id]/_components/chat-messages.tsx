@@ -2,75 +2,24 @@
 
 import Image from 'next/image'
 import { useRef } from 'react'
+import { PopulatedDoc } from 'mongoose'
+import type { Session } from 'next-auth'
 
 import { cn } from '@/lib/utils'
+import { IMessageDocument } from '@/models/message.model'
 
-const messages = [
-  {
-    _id: '1',
-    content: 'hello e',
-    sender: {
-      _id: '1',
-      fullName: 'Son Tung',
-    },
-    messageType: 'text',
-  },
-  {
-    _id: '2',
-    content: 'chao xin',
-    sender: {
-      _id: '2',
-      fullName: 'Thao Vy',
-    },
-    messageType: 'text',
-  },
-  {
-    _id: '3',
-    content: 'anh oi',
-    sender: {
-      _id: '2',
-      fullName: 'Thao Vy',
-    },
-    messageType: 'text',
-  },
-  {
-    _id: '4',
-    content: 'Sao z cung',
-    sender: {
-      _id: '1',
-      fullName: 'Son Tung',
-    },
-    messageType: 'text',
-  },
-  {
-    _id: '5',
-    content: 'minh lam quen nhe',
-    sender: {
-      _id: '2',
-      fullName: 'Thao Vy',
-    },
-    messageType: 'text',
-  },
-  {
-    _id: '6',
-    content: 'oke trien luon',
-    sender: {
-      _id: '1',
-      fullName: 'Son Tung',
-    },
-    messageType: 'text',
-  },
-]
+interface ChatMessagesProps {
+  messages: IMessageDocument[] | PopulatedDoc<IMessageDocument>[]
+  session: Session | null
+}
 
-export const ChatMessage = () => {
+export const ChatMessages = ({ messages, session }: ChatMessagesProps) => {
   const lastMsgRef = useRef<HTMLDivElement>(null)
-
-  const session = { user: { _id: '1' } }
 
   return (
     <>
       {messages.map((message, index) => {
-        const amISender = message.sender._id === session.user._id
+        const amISender = message.sender._id === session?.user._id
         const senderFullName = message.sender.fullName.toUpperCase()
         const isMessageImage = message.messageType === 'image'
         const isPrevMessageFromSameSender =
