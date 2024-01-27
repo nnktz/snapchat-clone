@@ -1,7 +1,11 @@
+import { unstable_noStore as noStore } from 'next/cache'
+
 import Message, { IMessageDocument } from '@/models/message.model'
 import User, { IUserDocument } from '@/models/user.model'
 
 export const getUsers = async (authUserId: string) => {
+  noStore()
+
   try {
     const allUser: IUserDocument[] = await User.find({
       _id: {
@@ -15,6 +19,10 @@ export const getUsers = async (authUserId: string) => {
           $or: [
             {
               sender: user._id,
+              receiver: authUserId,
+            },
+            {
+              sender: authUserId,
               receiver: user._id,
             },
           ],

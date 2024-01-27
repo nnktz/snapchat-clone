@@ -27,7 +27,7 @@ export const ChatItem = ({ chat }: { chat: any }) => {
     messageStatus = isMsgOpened ? 'Opened' : 'Sent'
 
     iconComponent =
-      lastMessage === 'text' ? (
+      lastMessageType === 'text' ? (
         <TextMessageSent
           className={isMsgOpened ? 'text-sigSnapChat' : 'fill-current text-sigSnapChat'}
         />
@@ -43,7 +43,7 @@ export const ChatItem = ({ chat }: { chat: any }) => {
     } else {
       messageStatus = isMsgOpened ? 'Received' : 'Show message'
       iconComponent =
-        lastMessage === 'text' ? (
+        lastMessageType === 'text' ? (
           <TextMessageSVGReceived
             className={!isMsgOpened ? 'fill-current text-sigSnapChat' : 'text-sigSnapChat'}
           />
