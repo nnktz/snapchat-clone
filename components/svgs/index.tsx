@@ -11,3 +11,27 @@ export const TextMessageSent = (props: SvgProps) => (
     />
   </svg>
 )
+
+export const ImageMessageSVG = (props: SvgProps) => (
+  <svg xmlns={link} width={16} height={16} fill="none" {...props}>
+    <rect
+      width={10.5}
+      height={10.5}
+      x={2.75}
+      y={2.75}
+      stroke="currentColor"
+      strokeWidth={1.5}
+      rx={1.808}
+    />
+  </svg>
+)
+
+export const TextMessageSVGReceived = (props: SvgProps) => (
+  <svg xmlns={link} width={16} height={16} fill="current" {...props}>
+    <path
+      stroke="currentColor"
+      strokeWidth={1.5}
+      d="M3 4.353C3 3.053 4.053 2 5.353 2h5.294C11.947 2 13 3.053 13 4.353v9.854a.5.5 0 0 1-.809.393l-2.989-2.35a1.176 1.176 0 0 0-.727-.25H5.353A2.353 2.353 0 0 1 3 9.647V4.353Z"
+    />
+  </svg>
+)
