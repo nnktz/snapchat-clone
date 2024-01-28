@@ -57,6 +57,8 @@ export const getUsers = async (authUserId: string) => {
 }
 
 export const getUserProfileById = async (userId: string) => {
+  noStore()
+
   try {
     await connectToDB()
 

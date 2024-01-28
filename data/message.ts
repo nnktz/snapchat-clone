@@ -1,7 +1,11 @@
+import { unstable_noStore as noStore } from 'next/cache'
+
 import { connectToDB } from '@/lib/db'
 import Chat, { IChatDocument } from '@/models/chat.model'
 
 export const getMessages = async (currentUserId: string, otherUserId: string) => {
+  noStore()
+
   try {
     await connectToDB()
 

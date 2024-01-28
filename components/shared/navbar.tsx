@@ -27,7 +27,13 @@ export const Navbar = async () => {
           Watch tutorial
         </Button>
 
-        {session && <LogoutButton />}
+        {!session && (
+          <Button asChild className="rounded-full bg-black p-3 text-xs text-white md:text-sm">
+            <Link href={'/login'}>Login</Link>
+          </Button>
+        )}
+
+        {session?.user && <LogoutButton />}
       </div>
     </header>
   )
