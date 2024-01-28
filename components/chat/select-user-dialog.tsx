@@ -61,7 +61,7 @@ export const SelectUserDialog = ({ selectedFile, onClose, onPrev }: SelectUserDi
   }
 
   return (
-    <Dialog open={!!selectedFile}>
+    <Dialog open={!!selectedFile} onOpenChange={onClose}>
       <DialogContent
         className="max-w-xs border border-sigColorBgBorder bg-sigMain text-white"
         onInteractOutside={onClose}

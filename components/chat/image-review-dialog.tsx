@@ -17,9 +17,9 @@ export const ImageReviewDialog = ({
   setStep,
 }: ImageReviewDialogProps) => {
   return (
-    <Dialog open={!!selectedFile}>
+    <Dialog open={!!selectedFile} onOpenChange={onClose}>
       <DialogContent
-        className="flex h-[80vh] max-w-xl flex-col border-sigColorBgBorder bg-sigMain md:max-w-3xl"
+        className="flex h-[80vh] max-w-xl flex-col border-sigColorBgBorder bg-sigMain text-white md:max-w-3xl"
         onInteractOutside={onClose}
       >
         <DialogHeader className="flex-1">

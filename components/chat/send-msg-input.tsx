@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useState, useTransition } from 'react'
+import { useRef, useState, useTransition } from 'react'
 import { useParams } from 'next/navigation'
 import { Loader2 } from 'lucide-react'
 
@@ -17,6 +17,7 @@ export const SendMsgInput = () => {
 
   const receiverId = params.id
 
+  const inputRef = useRef<HTMLInputElement>(null)
   const [messageContent, setMessageContent] = useState('')
   const [isPending, startTransition] = useTransition()
 
@@ -30,6 +31,8 @@ export const SendMsgInput = () => {
       })
     } catch (error) {
       console.error(error)
+    } finally {
+      inputRef.current?.focus()
     }
   }
 
@@ -51,11 +54,13 @@ export const SendMsgInput = () => {
         className="flex flex-1 items-center gap-1 rounded-full border border-sigColorBgBorder bg-sigBackgroundSecondaryHover"
       >
         <Input
+          ref={inputRef}
           placeholder="Send a chat"
           className="h-full w-full rounded-full border-none bg-transparent outline-none focus:outline-transparent"
           value={messageContent}
           onChange={(e) => setMessageContent(e.target.value)}
           disabled={isPending}
+          autoFocus
         />
 
         <Button

@@ -1,12 +1,14 @@
 'use client'
 
 import Image from 'next/image'
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { PopulatedDoc } from 'mongoose'
 import type { Session } from 'next-auth'
 
 import { cn } from '@/lib/utils'
 import { IMessageDocument } from '@/models/message.model'
+
+import { ChatPreviewImage } from './chat-preview-image'
 
 interface ChatMessagesProps {
   messages: IMessageDocument[] | PopulatedDoc<IMessageDocument>[]
@@ -16,6 +18,12 @@ interface ChatMessagesProps {
 export const ChatMessages = ({ messages, session }: ChatMessagesProps) => {
   const lastMsgRef = useRef<HTMLDivElement>(null)
 
+  const [isPreviewImage, setIsPreviewImage] = useState({ open: false, imageUrl: '' })
+
+  useEffect(() => {
+    lastMsgRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages])
+
   return (
     <>
       {messages.map((message, index) => {
@@ -24,6 +32,10 @@ export const ChatMessages = ({ messages, session }: ChatMessagesProps) => {
         const isMessageImage = message.messageType === 'image'
         const isPrevMessageFromSameSender =
           index > 0 && messages[index - 1].sender._id === message.sender._id
+
+        const handleImageLoad = () => {
+          lastMsgRef.current?.scrollIntoView({ behavior: 'smooth' })
+        }
 
         return (
           <div className="w-full" key={message._id} ref={lastMsgRef}>
@@ -53,6 +65,8 @@ export const ChatMessages = ({ messages, session }: ChatMessagesProps) => {
                       height={200}
                       className="h-auto w-auto cursor-pointer object-cover"
                       alt="image"
+                      onLoad={handleImageLoad}
+                      onClick={() => setIsPreviewImage({ open: true, imageUrl: message.content })}
                     />
                   </div>
                 ) : (
@@ -63,6 +77,12 @@ export const ChatMessages = ({ messages, session }: ChatMessagesProps) => {
           </div>
         )
       })}
+
+      <ChatPreviewImage
+        imageUrl={isPreviewImage.imageUrl}
+        onOpenChange={() => setIsPreviewImage({ open: false, imageUrl: '' })}
+        open={isPreviewImage.open}
+      />
     </>
   )
 }
